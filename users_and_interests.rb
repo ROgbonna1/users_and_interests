@@ -2,7 +2,7 @@ require 'pry'
 require 'sinatra'
 require 'psych'
 require "sinatra/reloader"
-require "tilt/erubis"
+# require "tilt/erubis"
 
 before do
   @data = Psych.load_file("data/users.yaml")
@@ -16,7 +16,9 @@ get '/' do
 end
 
 get '/:user' do
+  redirect '/' unless @users.include? params[:user]
   @user = params[:user]
   @title = "#{@user.capitalize}'s Page"
   erb :user
 end
+
